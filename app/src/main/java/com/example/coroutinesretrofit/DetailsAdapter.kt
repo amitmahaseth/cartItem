@@ -9,8 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coroutinesretrofit.model.CountModel
 
-class DetailsAdapter(private var mContext: Context, private var countList: ArrayList<CountModel>,
-                     var onItenclicked:Clicklistner) :
+class DetailsAdapter(
+    private var mContext: Context, private var countList: ArrayList<CountModel>,
+    var onItemClicked: Clicklistner
+) :
     RecyclerView.Adapter<DetailsViewAdapter>() {
 
 
@@ -20,51 +22,48 @@ class DetailsAdapter(private var mContext: Context, private var countList: Array
         return DetailsViewAdapter(view)
     }
 
-    public fun getCountList():ArrayList<CountModel>
-    {
-        return countList;
+     fun getCountList(): ArrayList<CountModel> {
+        return countList
     }
+
     override fun onBindViewHolder(holder: DetailsViewAdapter, position: Int) {
         var countModel = countList[position]
-        holder.tv_desc.text=countModel.name
+        holder.tv_desc.text = countModel.name
         holder.tv_prize.text = countModel.price.toString()
-        holder.tv_cont.text= countModel.countTextView.toString()
+        holder.tv_cont.text = countModel.countTextView.toString()
 
 
-            holder.tv_cont.text = countList.get(position).countTextView.toString()
-            holder.tv_prize.text=countList.get(position).price.toString()
+        holder.tv_cont.text = countList.get(position).countTextView.toString()
+        holder.tv_prize.text = countList.get(position).price.toString()
 
-            holder.img_plus.setOnClickListener {
-            if(countList.get(position).countTextView<10)
-            {
-                var counter=countList.get(position).countTextView+1
-                countList.get(position).countTextView=counter
+        holder.img_plus.setOnClickListener {
+            if (countList.get(position).countTextView < 10) {
+                val counter = countList.get(position).countTextView + 1
+                countList.get(position).countTextView = counter
 
-                var price =countList.get(position).basePrice * counter
-                countList.get(position).price=price
+                val price = countList.get(position).basePrice * counter
+                countList.get(position).price = price
                 notifyDataSetChanged()
-                onItenclicked.onItem(countList)
+                onItemClicked.onItem(countList)
             }
 
-
-
-
-            }
-        holder.img_minus.setOnClickListener {
-            if (countList.get(position).countTextView>1){
-                var counter=countList.get(position).countTextView-1
-                countList.get(position).countTextView=counter
-
-                var price =countList.get(position).basePrice * counter
-                countList.get(position).price=price
-                notifyDataSetChanged()
-                onItenclicked.onItem(countList)
-            }
-
-
-            }
 
         }
+        holder.img_minus.setOnClickListener {
+            if (countList.get(position).countTextView > 1) {
+                val counter = countList.get(position).countTextView - 1
+                countList.get(position).countTextView = counter
+
+                val price = countList.get(position).basePrice * counter
+                countList.get(position).price = price
+                notifyDataSetChanged()
+                onItemClicked.onItem(countList)
+            }
+
+
+        }
+
+    }
 
 
     override fun getItemCount(): Int {
@@ -73,7 +72,6 @@ class DetailsAdapter(private var mContext: Context, private var countList: Array
 
 
 }
-
 
 
 class DetailsViewAdapter(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -86,6 +84,7 @@ class DetailsViewAdapter(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var img_minus = itemView.findViewById<ImageView>(R.id.img_minus)
 
 }
+
 interface Clicklistner {
     fun onItem(countList: ArrayList<CountModel>)
 
