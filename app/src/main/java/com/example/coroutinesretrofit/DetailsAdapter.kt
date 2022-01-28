@@ -20,13 +20,16 @@ class DetailsAdapter(private var mContext: Context, private var countList: Array
         return DetailsViewAdapter(view)
     }
 
+    public fun getCountList():ArrayList<CountModel>
+    {
+        return countList;
+    }
     override fun onBindViewHolder(holder: DetailsViewAdapter, position: Int) {
         var countModel = countList[position]
         holder.tv_desc.text=countModel.name
         holder.tv_prize.text = countModel.price.toString()
         holder.tv_cont.text= countModel.countTextView.toString()
-        var counter=countModel.countTextView
-        var price =countModel.price
+
 
             holder.tv_cont.text = countList.get(position).countTextView.toString()
             holder.tv_prize.text=countList.get(position).price.toString()
@@ -37,9 +40,10 @@ class DetailsAdapter(private var mContext: Context, private var countList: Array
                 var counter=countList.get(position).countTextView+1
                 countList.get(position).countTextView=counter
 
-                var price =countList.get(position).price * counter
+                var price =countList.get(position).basePrice * counter
                 countList.get(position).price=price
                 notifyDataSetChanged()
+                onItenclicked.onItem(countList)
             }
 
 
@@ -51,9 +55,10 @@ class DetailsAdapter(private var mContext: Context, private var countList: Array
                 var counter=countList.get(position).countTextView-1
                 countList.get(position).countTextView=counter
 
-                var price =countList.get(position).price * counter
+                var price =countList.get(position).basePrice * counter
                 countList.get(position).price=price
                 notifyDataSetChanged()
+                onItenclicked.onItem(countList)
             }
 
 
@@ -67,8 +72,8 @@ class DetailsAdapter(private var mContext: Context, private var countList: Array
     }
 
 
-
 }
+
 
 
 class DetailsViewAdapter(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -82,6 +87,7 @@ class DetailsViewAdapter(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 }
 interface Clicklistner {
-    fun onItem(position: Int)
+    fun onItem(countList: ArrayList<CountModel>)
+
 
 }

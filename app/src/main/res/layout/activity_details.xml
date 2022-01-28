@@ -8,14 +8,16 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:id="@+id/rv_details"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/const_total"
         tools:listitem="@layout/details_list"
         />
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const_total"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_total"
-            android:text="Button"/>
+            android:text="Submit"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
